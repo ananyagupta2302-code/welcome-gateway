@@ -64,7 +64,7 @@ function LoginPage() {
           <AuthField
             id="login-username"
             label="Username or Email"
-            label-hidden
+            hideLabel
             icon={User}
             placeholder="Username or Email"
             autoComplete="username"

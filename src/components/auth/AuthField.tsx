@@ -5,17 +5,21 @@ import { cn } from "@/lib/utils";
 interface AuthFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   icon: LucideIcon;
+  hideLabel?: boolean;
 }
 
 export const AuthField = forwardRef<HTMLInputElement, AuthFieldProps>(
-  function AuthField({ label, icon: Icon, type = "text", id, ...props }, ref) {
+  function AuthField({ label, hideLabel = false, icon: Icon, type = "text", id, ...props }, ref) {
     const isPassword = type === "password";
     const [visible, setVisible] = useState(false);
     const inputType = isPassword ? (visible ? "text" : "password") : type;
 
     return (
       <div>
-        <label htmlFor={id} className="mb-1.5 block text-sm font-medium">
+        <label
+          htmlFor={id}
+          className={cn("mb-1.5 block text-sm font-medium", hideLabel && "sr-only")}
+        >
           {label}
         </label>
         <div className="relative">
@@ -27,6 +31,7 @@ export const AuthField = forwardRef<HTMLInputElement, AuthFieldProps>(
             ref={ref}
             id={id}
             type={inputType}
+            aria-label={hideLabel ? label : undefined}
             {...props}
             className={cn(
               "w-full rounded-lg border border-input bg-ocean-deep/60 py-2.5 pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground/70",
